@@ -1,0 +1,901 @@
+[gd_scene load_steps=14 format=3 uid="uid://dm8r2r15nplhc"]
+
+[ext_resource type="Script" path="res://scripts/Physics/GravityRigidBody.gd" id="1_23khb"]
+[ext_resource type="Script" path="res://scripts/Physics/GravityZone.gd" id="2_8e308"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_20ucq"]
+radius = 30.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gsgef"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tqfgy"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vyxl5"]
+radius = 10.0
+height = 20.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_uc6w7"]
+radius = 40.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2i6xd"]
+radius = 50.0
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ll6ud"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fwi6m"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_nsaqm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_widqp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pdnik"]
+
+[node name="DevScene" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.282227)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 1.60821e-08, 2.9182e-08, -2.98023e-08, 0.823374, 0.567499, -1.49012e-08, -0.567499, 0.823374, 8.8919, 22.6064, 31.2074)
+fov = 107.911
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 1.34922e-10, 2.96506e-10, -3.25759e-10, 0.417566, 0.908647, -1.21412e-12, -0.908647, 0.417566, 0, 24.6908, 9.06589)
+light_energy = 20.0
+shadow_enabled = true
+spot_range = 15.3207
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 1.34922e-10, 2.96506e-10, -3.25759e-10, 0.417566, 0.908647, -1.21412e-12, -0.908647, 0.417566, 25.5298, 19.8421, 24.7778)
+light_energy = 20.0
+shadow_enabled = true
+spot_range = 15.3207
+
+[node name="Planet" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+transform = Transform3D(1, 0, 0, 0, 0.999894, -0.0145729, 0, 0.0145729, 0.999894, 0.00615215, 1.86197, 0.326719)
+disable_mode = 1
+script = ExtResource("2_8e308")
+gravity_type = 1
+dependent_gravity_magnitude = 5.0
+dependent_gravity_points = [NodePath("center")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet"]
+transform = Transform3D(1, -2.09799e-10, -5.02843e-13, 2.09799e-10, 0.999989, 0.00479969, -5.02841e-13, -0.00479969, 0.999989, 0, 0, 0)
+shape = SubResource("SphereShape3D_20ucq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Planet"]
+physics_material_override = SubResource("PhysicsMaterial_gsgef")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet/StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 20, 2.98023e-08, 0, -2.98023e-08, 20, 0, 0, 0)
+shape = SubResource("SphereShape3D_tqfgy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Planet/StaticBody3D"]
+mesh = SubResource("SphereMesh_vyxl5")
+
+[node name="center" type="Node3D" parent="Planet"]
+transform = Transform3D(1, 0, 0, 0, 0.999894, 0.0145729, 0, -0.0145729, 0.999894, -0.00615215, 0.0783677, -0.0445047)
+
+[node name="Planet2" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+transform = Transform3D(1, 0, 0, 0, 0.999894, -0.0145729, 0, 0.0145729, 0.999894, 30.1799, 2.01491, 14.0277)
+disable_mode = 1
+script = ExtResource("2_8e308")
+gravity_type = 1
+dependent_gravity_magnitude = 4.0
+dependent_gravity_points = [NodePath("center")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet2"]
+transform = Transform3D(1, -2.09799e-10, -5.02843e-13, 2.09799e-10, 0.999989, 0.00479969, -5.02841e-13, -0.00479969, 0.999989, 0, 0, 0)
+shape = SubResource("SphereShape3D_20ucq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Planet2"]
+physics_material_override = SubResource("PhysicsMaterial_gsgef")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet2/StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 20, 2.98023e-08, 0, -2.98023e-08, 20, 0, 0, 0)
+shape = SubResource("SphereShape3D_tqfgy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Planet2/StaticBody3D"]
+mesh = SubResource("SphereMesh_vyxl5")
+
+[node name="center" type="Node3D" parent="Planet2"]
+transform = Transform3D(1, 0, 0, 0, 0.999894, 0.0145729, 0, -0.0145729, 0.999894, -0.00615215, 0.0783677, -0.0445047)
+
+[node name="Planet3" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+transform = Transform3D(1, 0, 0, 0, 0.999894, -0.0145729, 0, 0.0145729, 0.999894, -5.51986, 1.86197, 38.5177)
+disable_mode = 1
+script = ExtResource("2_8e308")
+gravity_type = 1
+dependent_gravity_magnitude = 5.0
+dependent_gravity_points = [NodePath("center")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet3"]
+transform = Transform3D(1, -2.09799e-10, -5.02843e-13, 2.09799e-10, 0.999989, 0.00479969, -5.02841e-13, -0.00479969, 0.999989, 0, 0, 0)
+shape = SubResource("SphereShape3D_20ucq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Planet3"]
+physics_material_override = SubResource("PhysicsMaterial_gsgef")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet3/StaticBody3D"]
+transform = Transform3D(20, 0, 0, 0, 20, 2.98023e-08, 0, -2.98023e-08, 20, 0, 0, 0)
+shape = SubResource("SphereShape3D_tqfgy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Planet3/StaticBody3D"]
+mesh = SubResource("SphereMesh_vyxl5")
+
+[node name="center" type="Node3D" parent="Planet3"]
+transform = Transform3D(1, 0, 0, 0, 0.999894, 0.0145729, 0, -0.0145729, 0.999894, -0.00615215, 0.0783677, -0.0445047)
+
+[node name="MiniGravity" type="Area3D" parent="Planet3" node_paths=PackedStringArray("dependent_gravity_points")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0073719, 0.0736895, -0.0495758)
+disable_mode = 1
+script = ExtResource("2_8e308")
+gravity_type = 1
+dependent_gravity_magnitude = 1.0
+dependent_gravity_points = [NodePath("../center")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet3/MiniGravity"]
+shape = SubResource("SphereShape3D_uc6w7")
+
+[node name="MiniGravity2" type="Area3D" parent="Planet3" node_paths=PackedStringArray("dependent_gravity_points")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0073719, 0.0736895, -0.0495758)
+disable_mode = 1
+script = ExtResource("2_8e308")
+gravity_type = 1
+dependent_gravity_magnitude = 0.1
+dependent_gravity_points = [NodePath("../center")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Planet3/MiniGravity2"]
+shape = SubResource("SphereShape3D_2i6xd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_energy = 2.0
+
+[node name="Boxes" type="Node3D" parent="."]
+
+[node name="physics_box39" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 8.6072, 12.4315, 9.08393)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box39"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box39"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box40" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 6.76596, 16.3964, 5.65704)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box40"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box40"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box41" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.346554, 0.239384, 0.421194, 0.746246, -0.515473, 0, 0.568347, 0.822789, 6.37805, 17.2317, 3.18747)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box41"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box41"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box42" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 5.65884, 18.7803, 4.08393)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box42"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box42"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box43" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 7.42022, 14.9875, 7.52106)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box43"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box43"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box44" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.346554, 0.239384, 0.421194, 0.746246, -0.515473, 0, 0.568347, 0.822789, 7.03231, 15.8228, 5.05148)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box44"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box44"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box45" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 6.3131, 17.3715, 5.94794)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box45"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box45"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box56" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 13.6038, -20.1677, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box56"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box56"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box57" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 22.6924, -24.815, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box57"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box57"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box58" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 10.0106, -23.7683, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box58"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box58"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box59" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, -0.768906, -17.8529, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box59"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box59"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box60" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 14.2311, -10.8529, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box60"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box60"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box61" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 14.2311, 2.46092, -23.392)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box61"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box61"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box62" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 14.2311, -3.879, 35.7806)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box62"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box62"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box32" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.346554, 0.239384, 0.421194, 0.746246, -0.515473, 0, 0.568347, 0.822789, 7.9318, 13.8859, 0.766068)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box32"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box32"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box33" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 7.21259, 15.4346, 1.66252)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box33"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box33"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box34" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 8.99297, 11.6009, -2.92983)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box34"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box34"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box35" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.346554, 0.239384, 0.421194, 0.746246, -0.515473, 0, 0.568347, 0.822789, 8.60506, 12.4362, -5.3994)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box35"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box35"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box36" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 7.88585, 13.9849, -4.50295)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box36"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box36"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box37" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 9.71432, 10.0476, 10.657)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box37"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box37"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box46" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 15.4008, 15.4346, 18.6377)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box46"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box46"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box47" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 17.1811, 11.6009, 14.0453)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box47"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box47"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box48" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.346554, 0.239384, 0.421194, 0.746246, -0.515473, 0, 0.568347, 0.822789, 16.7932, 12.4362, 11.5758)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box48"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box48"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box49" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.304636, -0.290863, 0.421194, 0.655983, 0.626324, -6.98262e-13, -0.690567, 0.723269, 16.074, 13.9849, 12.4722)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box49"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box49"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box50" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 17.9025, 10.0476, 27.6322)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box50"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -2.98023e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box50"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box51" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 17.5401, 10.0476, 20.2038)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box51"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -2.98023e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box51"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box52" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 22.5401, 10.0476, 24.2038)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box52"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -2.98023e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box52"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box53" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 24.5401, 10.0476, 29.2038)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box53"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -2.98023e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box53"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box54" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, -3.56686, 10.0476, 13.2398)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box54"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -2.98023e-08, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box54"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box38" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.346554, 0.239384, 0.421194, 0.746246, -0.515473, 0, 0.568347, 0.822789, 9.32641, 10.8829, 8.18747)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box38"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box38"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 0, 14.3309, 1.77165)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box2" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 0, 15.2519, -0.697921)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box2"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box2"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box3" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 0, 16.9595, 0.198534)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box3"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box3"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box4" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 0, 12.7325, -4.39382)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box4"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box4"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box5" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 0, 13.6535, -6.86339)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box5"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box5"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box6" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 0, 15.361, -5.96694)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box6"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box6"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box7" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 0, 11.0199, 9.19305)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box7"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box7"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box8" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 0, 11.9408, 6.72348)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box8"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box8"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box9" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 0, 13.6484, 7.61994)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box9"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box9"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box10" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 0, 18.0199, 4.19305)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box10"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box10"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box11" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 0, 18.9408, 1.72348)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box11"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box11"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box12" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 0, 20.6484, 2.61994)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box12"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box12"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box13" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 0, 16.4665, 6.05707)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box13"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box13"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box14" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 0, 17.3875, 3.58749)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box14"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box14"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box15" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 0, 19.095, 4.48395)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box15"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box15"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box16" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 13.6653, 8.10609, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box16"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box16"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box17" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 13.6653, 9.02707, 0.766068)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box17"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box17"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box18" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 13.6653, 10.7346, 1.66252)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box18"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box18"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box19" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 13.6653, 6.50763, -2.92983)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box19"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box19"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box20" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 13.6653, 7.42861, -5.3994)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box20"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box20"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box21" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 13.6653, 9.13614, -4.50295)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box21"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box21"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box22" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 13.6653, 4.795, 10.657)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box22"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box22"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box23" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 13.6653, 5.71598, 8.18747)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box23"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box23"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box24" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 13.6653, 7.42351, 9.08393)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box24"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box24"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box25" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 13.6653, 11.795, 5.65704)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box25"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box25"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box26" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 13.6653, 12.716, 3.18747)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box26"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box26"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box27" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 13.6653, 14.4235, 4.08393)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box27"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box27"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box28" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.895269, 0.445526, 0, -0.445526, 0.895269, 13.6653, 10.2417, 7.52106)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box28"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box28"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box29" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, 0, 0, 0, 0.822789, -0.568347, 0, 0.568347, 0.822789, 13.6653, 11.1626, 5.05148)
+physics_material_override = SubResource("PhysicsMaterial_pdnik")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box29"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box29"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box30" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(1, -1.79261e-10, -1.70189e-10, 2.47181e-10, 0.723269, 0.690567, -6.98262e-13, -0.690567, 0.723269, 13.6653, 12.8702, 5.94794)
+physics_material_override = SubResource("PhysicsMaterial_ll6ud")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box30"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box30"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box31" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, 8.31971, 13.0506, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box31"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box31"]
+mesh = SubResource("BoxMesh_nsaqm")
+
+[node name="physics_box55" type="RigidBody3D" parent="Boxes"]
+transform = Transform3D(0.906971, -0.377082, -0.187653, 0.421194, 0.811983, 0.404079, 0, -0.445526, 0.895269, -17.6779, 17.0478, 3.23564)
+physics_material_override = SubResource("PhysicsMaterial_widqp")
+gravity_scale = 0.0
+script = ExtResource("1_23khb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Boxes/physics_box55"]
+shape = SubResource("BoxShape3D_fwi6m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Boxes/physics_box55"]
+mesh = SubResource("BoxMesh_nsaqm")

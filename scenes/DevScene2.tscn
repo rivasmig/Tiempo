@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://dnly15gengfml"]
+
+[ext_resource type="Script" path="res://scripts/Physics/GravityZone.gd" id="1_eyhls"]
+[ext_resource type="Script" path="res://scripts/Physics/TimeManager.gd" id="1_x7uns"]
+[ext_resource type="Script" path="res://scripts/Physics/GravityRigidBody.gd" id="2_qeg7p"]
+[ext_resource type="Script" path="res://scripts/Physics/TimeObject.gd" id="3_xd8rt"]
+[ext_resource type="Script" path="res://scripts/Physics/TimeControls.gd" id="5_sd5ol"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_f4u7b"]
+absorbent = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7u1lx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gh0ob"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_p08jq"]
+radius = 20.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_a7me2"]
+radius = 20.0
+height = 40.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ft8b"]
+albedo_color = Color(0.227451, 0.537255, 0.101961, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_p0cwh"]
+radius = 50.0
+
+[node name="DevScene2" type="Node3D"]
+script = ExtResource("1_x7uns")
+
+[node name="Time Box" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58459, 27.0278, 7.64038)
+script = ExtResource("3_xd8rt")
+
+[node name="Box2" type="RigidBody3D" parent="Time Box"]
+physics_material_override = SubResource("PhysicsMaterial_f4u7b")
+gravity_scale = 0.0
+script = ExtResource("2_qeg7p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Time Box/Box2"]
+shape = SubResource("BoxShape3D_7u1lx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Time Box/Box2"]
+mesh = SubResource("BoxMesh_gh0ob")
+
+[node name="planet" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+script = ExtResource("1_eyhls")
+gravity_type = 1
+dependent_gravity_magnitude = 10.0
+dependent_gravity_points = [NodePath("Center")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="planet"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="planet/StaticBody3D"]
+shape = SubResource("SphereShape3D_p08jq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="planet/StaticBody3D"]
+mesh = SubResource("SphereMesh_a7me2")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_0ft8b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="planet"]
+shape = SubResource("SphereShape3D_p0cwh")
+
+[node name="Center" type="Node3D" parent="planet"]
+
+[node name="Box" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.51912, 26.9823, 7.60375)
+gravity_scale = 0.0
+script = ExtResource("2_qeg7p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+shape = SubResource("BoxShape3D_7u1lx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]
+mesh = SubResource("BoxMesh_gh0ob")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5048, 8.44769, 54.9934)
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("5_sd5ol")
+changeAmount = 0.01
