@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://xq1k5hqmetjp"]
+
+[ext_resource type="Script" path="res://scripts/TimeSpeedDisplay.gd" id="1_h3bxf"]
+
+[node name="SimpleGui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h3bxf")
+
+[node name="TimeSpeedLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.016
+anchor_top = 0.025
+anchor_right = 0.176
+anchor_bottom = 0.102
+offset_left = 0.567999
+offset_top = -0.200001
+offset_right = 0.247986
+offset_bottom = -0.0960007
+text = "Time:"

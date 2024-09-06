@@ -6,6 +6,9 @@ extends Node
 # Enable/Disable development mode for debugging
 @export var DEV_MODE: bool = false
 
+# Timer interval for handling input (in seconds)
+@export var input_interval: float = 0.1  # You can adjust this value to change the interval between inputs
+
 func _ready():
 	if DEV_MODE:
 		print("[TimeControls] DEV_MODE: TimeControls ready.")
@@ -18,12 +21,17 @@ func _ready():
 	add_child(timer)
 	timer.start()
 
+	# Create a timer to handle input at a fixed interval
+	var input_timer = Timer.new()
+	input_timer.one_shot = false
+	input_timer.wait_time = input_interval
+	input_timer.connect("timeout", Callable(self, "handle_input"))
+	add_child(input_timer)
+	input_timer.start()
+
 func _initialize_time_controls():
 	if DEV_MODE:
 		print("[TimeControls] DEV_MODE: Attempting to initialize TimeControls after delay.")
-	handle_input()
-
-func _process(delta):
 	handle_input()
 
 # Function to handle player input
