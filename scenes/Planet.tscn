@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba5raf1w4hxx"]
+
+[ext_resource type="Script" path="res://scripts/Physics/GravityZone.gd" id="1_u2c52"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qx4gn"]
+radius = 20.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_1vagn"]
+radius = 20.0
+height = 40.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2fsp3"]
+albedo_color = Color(0.227451, 0.537255, 0.101961, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mp8um"]
+radius = 50.0
+
+[node name="Planet" type="Node3D"]
+
+[node name="planet" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+script = ExtResource("1_u2c52")
+gravity_type = 1
+dependent_gravity_magnitude = 10.0
+dependent_gravity_points = [NodePath("")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="planet"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="planet/StaticBody3D"]
+shape = SubResource("SphereShape3D_qx4gn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="planet/StaticBody3D"]
+mesh = SubResource("SphereMesh_1vagn")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2fsp3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="planet"]
+shape = SubResource("SphereShape3D_mp8um")
+
+[node name="Center" type="Node3D" parent="planet"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dnly15gengfml"]
+[gd_scene load_steps=16 format=3 uid="uid://dnly15gengfml"]
 
 [ext_resource type="Script" path="res://scripts/Physics/GravityZone.gd" id="1_eyhls"]
 [ext_resource type="Script" path="res://scripts/Physics/TimeManager.gd" id="1_x7uns"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scripts/Physics/TimeObject.gd" id="3_xd8rt"]
 [ext_resource type="Script" path="res://scripts/Physics/TimeControls.gd" id="5_sd5ol"]
 [ext_resource type="PackedScene" uid="uid://xq1k5hqmetjp" path="res://scenes/SimpleGUI.tscn" id="6_cmuvm"]
+[ext_resource type="Script" path="res://scripts/RandomSpawnInRange.gd" id="7_6584e"]
+[ext_resource type="PackedScene" uid="uid://bs3xmvgtqn0st" path="res://scenes/box.tscn" id="8_4w4eu"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_p08jq"]
 radius = 20.0
@@ -424,3 +426,15 @@ shape = SubResource("BoxShape3D_7u1lx")
 mesh = SubResource("BoxMesh_gh0ob")
 
 [node name="SimpleGui" parent="." instance=ExtResource("6_cmuvm")]
+
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("spawn_corner1", "spawn_corner2")]
+script = ExtResource("7_6584e")
+preset_scene = ExtResource("8_4w4eu")
+spawn_corner1 = NodePath("Node3D")
+spawn_corner2 = NodePath("Node3D2")
+
+[node name="Node3D" type="Node3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.15517, 21.5791, -3.20224)
+
+[node name="Node3D2" type="Node3D" parent="Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.04028, 33.7628, 6.41843)

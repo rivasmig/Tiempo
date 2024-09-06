@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyw11xkpie72f"]
+
+[ext_resource type="Script" path="res://scripts/Physics/TimeObject.gd" id="1_8v4gy"]
+[ext_resource type="Script" path="res://scripts/Physics/GravityZone.gd" id="2_8qfle"]
+[ext_resource type="Script" path="res://scripts/Physics/GravityRigidBody.gd" id="3_mi515"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c4d7v"]
+absorbent = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_khkga"]
+
+[sub_resource type="Shader" id="Shader_tdpll"]
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, cull_disabled; // Corrected render mode for transparency
+
+uniform vec4 albedo : source_color = vec4(1.0, 1.0, 1.0, 0.0); // Base color with transparency
+uniform vec4 wire_color : source_color = vec4(0.0, 1.0, 0.5, 0.5); // Wireframe color with transparency
+uniform float wire_width : hint_range(0.0, 40.0) = 5.0; // Wireframe thickness
+uniform float wire_smoothness : hint_range(0.0, 0.1) = 0.01; // Smoothness of the wireframe edges
+uniform float glow_intensity : hint_range(0.0, 10.0) = 2.0; // Intensity of the glow effect
+
+varying vec3 barys;
+
+void vertex() {
+    // Assign barycentric coordinates based on the vertex ID
+    int index = VERTEX_ID % 3;
+    switch (index) {
+        case 0:
+            barys = vec3(1.0, 0.0, 0.0);
+            break;
+        case 1:
+            barys = vec3(0.0, 1.0, 0.0);
+            break;
+        case 2:
+            barys = vec3(0.0, 0.0, 1.0);
+            break;
+    }
+}
+
+void fragment() {
+    // Calculate screen-space derivatives for wireframe smoothing
+    vec3 deltas = fwidth(barys);
+    vec3 barys_s = smoothstep(deltas * wire_width - wire_smoothness, deltas * wire_width + wire_smoothness, barys);
+    
+    // Determine the wireframe intensity
+    float wires = min(barys_s.x, min(barys_s.y, barys_s.z));
+    
+    // Mix the wireframe color with the base color
+    vec3 final_color = mix(wire_color.rgb, albedo.rgb, wires);
+    
+    // Set the final fragment color with transparency and apply glow
+    ALBEDO = final_color;
+    ALPHA = wire_color.a * (1.0 - wires); // Set transparency for wireframe
+    EMISSION = final_color * glow_intensity * (1.0 - wires); // Apply the glow effect
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w65yu"]
+render_priority = 0
+shader = SubResource("Shader_tdpll")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/wire_color = Color(0, 1, 0.5, 1)
+shader_parameter/wire_width = 0.577
+shader_parameter/wire_smoothness = 0.008
+shader_parameter/glow_intensity = 5.185
+
+[sub_resource type="BoxMesh" id="BoxMesh_uihpr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_268ip"]
+radius = 10.0
+
+[node name="Cool_Box" type="Node3D"]
+script = ExtResource("1_8v4gy")
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+script = ExtResource("2_8qfle")
+gravity_type = 1
+dependent_gravity_magnitude = 0.1
+dependent_gravity_points = [NodePath("../center")]
+
+[node name="Box2" type="RigidBody3D" parent="Area3D"]
+physics_material_override = SubResource("PhysicsMaterial_c4d7v")
+gravity_scale = 0.0
+script = ExtResource("3_mi515")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/Box2"]
+shape = SubResource("BoxShape3D_khkga")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/Box2"]
+material_override = SubResource("ShaderMaterial_w65yu")
+mesh = SubResource("BoxMesh_uihpr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0542488, 0.0613594)
+shape = SubResource("SphereShape3D_268ip")
+
+[node name="center" type="Node3D" parent="."]

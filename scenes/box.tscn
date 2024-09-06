@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://bs3xmvgtqn0st"]
+
+[ext_resource type="Script" path="res://scripts/Physics/TimeObject.gd" id="1_0ucsi"]
+[ext_resource type="Script" path="res://scripts/Physics/GravityRigidBody.gd" id="2_3cxgf"]
+[ext_resource type="Script" path="res://scripts/Physics/GravityZone.gd" id="2_w7csd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c4d7v"]
+absorbent = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_khkga"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uihpr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_268ip"]
+radius = 10.0
+
+[node name="Box" type="Node3D"]
+script = ExtResource("1_0ucsi")
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("dependent_gravity_points")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00720215, 0.0322876, 0.00167847)
+script = ExtResource("2_w7csd")
+gravity_type = 1
+dependent_gravity_magnitude = 0.5
+dependent_gravity_points = [NodePath("../center")]
+
+[node name="Box2" type="RigidBody3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0186505, -0.00617934, 0.00783602)
+physics_material_override = SubResource("PhysicsMaterial_c4d7v")
+gravity_scale = 0.0
+script = ExtResource("2_3cxgf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D/Box2"]
+shape = SubResource("BoxShape3D_khkga")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D/Box2"]
+mesh = SubResource("BoxMesh_uihpr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0542488, 0.0613594)
+shape = SubResource("SphereShape3D_268ip")
+
+[node name="center" type="Node3D" parent="."]
